@@ -60,8 +60,13 @@ const BlogList = () => {
         const updateBlogs = blogs.filter((blog) => {
             return blog.id !== idBlog;
         })
-        // SOSTITUZIONE
-        setBlogs(updateBlogs);
+
+        axios.delete(`http://localhost:3000/posts/${idBlog}`)
+            .then(res =>
+                console.log(res),
+                // SOSTITUZIONE
+                setBlogs(updateBlogs)
+            )
     }
 
     // FUNZIONE DI GESTIONE CHIAMATA API

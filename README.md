@@ -28,3 +28,30 @@ P.s.: prima di far ciò, ricordatevi di installare e settare il modulo CORS sul 
 BONUS:
 
 > gestire la possibililtà che non ci siano ancora i postBuon lavoro!
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Ciao Ragazzi,
+
+esercizio di oggi: React Blog Api 
+(Create-delete)
+
+repo: react-api
+(quella di ieri)
+
+Esercizio
+
+Partendo dall’esercizio precedente, sviluppiamo parte delle CRUD e integriamo le API che abbiamo sviluppato durante il modulo su ExpressJS.
+
+Gestiamo i campi e il submit del form, assicuriamoci che questi dati vengano inviati al backend e correttamente salvati, per creare un nuovo post, e che quindi questo appaia anche in pagina.
+
+
+BONUS:
+
+Implementare la funzionalità di cancellazione, assicurandoci che funzioni sia sul frontend che sul backend (il post sparisce sulla pagina ma anche sul server). 
+
+Buon lavoro!
+..e buon we

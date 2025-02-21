@@ -4,10 +4,10 @@ import axios from 'axios';
 
 //  AGGIUNGIAMO I CAMPI VUOTI AL FORM
 const initialFormData = {
-    titolo: "",
-    content: "",
+    title: "",
     image: "",
-    tags: "",
+    content: "",
+    tags: [],
 };
 
 
@@ -25,7 +25,7 @@ const BlogList = () => {
     function handleFormData(e) {
 
         // GESTIONE VALUE A SECONDA DEL TIPO DI INPUT
-        const value = e.target.type === "" ? e.target.checked : e.target.value;
+        const value = e.target.name === "tags" ? e.target.value.split(",") : e.target.value;
 
         //SETTA TRAMITE SETSTATE L'OGGETTO CON LE INFO PRESI DAI CAMPI DEL FORM
         setFormData((currentFormData) => ({
@@ -38,11 +38,18 @@ const BlogList = () => {
     //FUNZIONE GESTIONE INVIO DELL'INTERO FORM
     function handleSubmit(e) {
         e.preventDefault();
-        setBlogs((currentBlogs) => [...currentBlogs, {
-            id:
-                currentBlogs.length === 0 ? 1 : currentBlogs[currentBlogs.length - 1].id + 1,
-            ...formData
-        }]);
+        // CHIAMATA VERSO API IN POST CON INVIO DATI NUOVO POST
+        axios.post("http://localhost:3000/posts", formData)
+            .then(res => {
+                // console.log(res.data)  
+                setMenu((currentBlogs) => [...currentBlogs, res.data])
+            })
+            .catch(err => console.log(err))
+        // setBlogs((currentBlogs) => [...currentBlogs, {
+        //     id:
+        //         currentBlogs.length === 0 ? 1 : currentBlogs[currentBlogs.length - 1].id + 1,
+        //     ...formData
+        // }]);
         //RESETTO IL FORM
         setFormData(initialFormData);
     }
@@ -78,29 +85,29 @@ const BlogList = () => {
                 {/* valore titolo blog */}
                 <input
                     type="text"
-                    name="titolo"
+                    name="title"
                     onChange={handleFormData}
-                    value={formData.titolo}
+                    value={formData.title}
                     placeholder='titolo del blog'
                 />
 
-
-                {/* valore contenuto blog */}
-                <textarea
-                    type="text"
-                    name="content"
-                    onChange={handleFormData}
-                    value={formData.contenuto}
-                    placeholder='contenuto del blog'
-                />
 
                 {/* valore autore blog */}
                 <input
                     type="text"
                     name="image"
                     onChange={handleFormData}
-                    value={formData.autore}
+                    value={formData.image}
                     placeholder='img'
+                />
+
+                {/* valore contenuto blog */}
+                <input
+                    type="text"
+                    name="content"
+                    onChange={handleFormData}
+                    value={formData.content}
+                    placeholder='contenuto del blog'
                 />
 
 
@@ -109,7 +116,7 @@ const BlogList = () => {
                     type="text"
                     name="tags"
                     onChange={handleFormData}
-                    value={formData.categoria}
+                    value={formData.tags}
                     placeholder='tags'
                 />
 
@@ -129,6 +136,9 @@ const BlogList = () => {
                         <img src={post.image} alt={post.title} />
                         <p>{post.content}</p>
                         <span>{post.tags} </span>
+                        <button onClick={() => deleteBlog(post.id)}>
+                            cancella
+                        </button>
                     </div>
 
                 ))
